@@ -2,13 +2,13 @@ const express = require('express');
 //importa o mongodb em MongoCLient
 const { MongoClient, ObjectId } = require('mongodb');
 // configura a url do banco
-const url="mongodb+srv://daviconde8:121006davizin12@cluster0.jaml6.mongodb.net";
+const url = "mongodb+srv://daviconde8:121006davizin12@cluster0.jaml6.mongodb.net";
 // nome do banco de dados
 const dbName = "daviconde8";
 // cria um cliente com a url criada
 const client = new MongoClient(url);
 
-async function main(){
+async function main() {
 
   console.info("Conectando ao banco de dados...");
   await client.connect();
@@ -36,23 +36,23 @@ async function main(){
   const lista = ["Mulher Maravilha", "Capitã Marvel", "Homem de Ferro"];
 
   //Read All -> [GET] /herois
-  app.get("/herois", async function (req,res){
+  app.get("/herois", async function (req, res) {
     const itens = await collection.find().toArray();
     res.send(itens)
   })
 
   //Create -> [POST] /herois
-  app.post("/herois", async function(req,res){
+  app.post("/herois", async function (req, res) {
     // extrai o nome do corpo da requisição 
     const item = req.body;
     //Insere o item na collection
     await collection.insertOne(item);
     //envia o objeto na resposta 
-    res.send (item)
+    res.send(item)
   })
 
   // Read by Id -> [GET] /herois/:id
-  app.get("/herois/:id", async function (req,res){
+  app.get("/herois/:id", async function (req, res) {
     //pegamos inicialmente o parametro de rota (id)
     const id = req.params.id;
     //buscamos a informação collection
@@ -60,30 +60,30 @@ async function main(){
       _id: new ObjectId(id),
     })
     //exibimos o item na resposta
-    if (item==null)
+    if (item == null)
       res.send("item não encontrado");
-    else 
+    else
       res.send(item);
 
   })
 
   // Update -> [PUT] /herois/:id
-  app.put("/herois/:id", async function(req,res){
+  app.put("/herois/:id", async function (req, res) {
     //pegamos inicialmente o parametro de rota (id)
     const id = req.params.id;
     // extrai o objeto da requisição 
     const item = req.body;
     //atualizamos na collection
     await collection.updateOne(
-      { _id: new ObjectId(id)},
-      { $set: item}
+      { _id: new ObjectId(id) },
+      { $set: item }
     )
     //exibimos o item na resposta
     res.send(item);
   })
 
   // Delete -> [DELETE] /herois/:id
-  app.delete("/herois/:id", async function(req,res){
+  app.delete("/herois/:id", async function (req, res) {
     //pegamos inicialmente o parametro de rota (id) que queremos remover
     const id = req.params.id;
 
