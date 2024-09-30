@@ -4,7 +4,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 // configura a url do banco
 const url="mongodb+srv://daviconde8:121006davizin12@cluster0.jaml6.mongodb.net";
 // nome do banco de dados
-const dbName = "backend-abril-24";
+const dbName = "daviconde8";
 // cria um cliente com a url criada
 const client = new MongoClient(url);
 
